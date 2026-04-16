@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Command Center | Crowd-Pulse AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #090a0f;
+            --panel: rgba(20, 25, 35, 0.7);
+            --accent: #00ffcc;
+            --danger: #ff3333;
+            --text: #e0e6ed;
+        }
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            height: 100vh;
+            overflow: auto;
+        }
+        .sidebar {
+            width: 250px;
+            min-width: 250px;
+            background: #0d1117;
+            padding: 20px;
+            border-right: 1px solid #1f2937;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 { color: var(--accent); font-size: 1.2rem; }
+        .sidebar .badge {
+            background: #1f2937;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .header { display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { margin: 0; font-size: 1.8rem; font-weight: 300; letter-spacing: 2px;}
+        .logout { color: #8b949e; text-decoration: none; border: 1px solid #30363d; padding: 8px 15px; border-radius: 5px; }
+        .logout:hover { background: #30363d; }
+        
+        .nodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+        }
+
+        .camera-node {
+            background: var(--panel);
+            backdrop-filter: blur(10px);
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Top Alert Banner */
+        .alert-banner {
+            padding: 15px 20px;
+            background: #1f2937;
+            border-radius: 8px;
+            border-left: 5px solid var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        .alert-banner.CRITICAL { background: rgba(255,51,51,0.2); border-left-color: var(--danger); color: #ffcccc; animation: pulse 1s infinite alternate;}
+        .alert-banner.PREDICTIVE_CRITICAL { background: rgba(255,0,0,0.5); border-left-color: #ff0000; color: white; animation: flash 0.5s infinite alternate;}
+        
+        @keyframes pulse { from { box-shadow: 0 0 10px rgba(255, 51, 51, 0.2); } to { box-shadow: 0 0 25px rgba(255, 51, 51, 0.6); } }
+        @keyframes flash { from { background: rgba(255,0,0,0.4); } to { background: rgba(255,0,0,0.8); } }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .metric-card {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid transparent;
+        }
+        .metric-card h4 { margin: 0; font-size: 0.75rem; color: #8b949e; text-transform: uppercase; }
+        .metric-card .val { font-size: 1.6rem; font-weight: 700; margin-top: 5px; color: var(--accent); }
+        .timeline-box { height: 100px; overflow-y: auto; font-family: monospace; font-size: 0.75rem; color: #a5b4fc; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px;}
+        .timeline-box p { margin: 3px 0; border-bottom: 1px solid #1f2937; padding-bottom: 3px; }
+
+        .video-container {
+            background: #000;
+            border-radius: 8px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border: 1px solid #30363d;
+        }
+        .recording-dot {
+            position: absolute; top: 15px; left: 15px;
+            width: 10px; height: 10px; background: red; border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>COMMAND CENTER</h2>
+    <div class="badge">
+        Operator: {{ username }}<br>
+        Clearance: Level 4
+    </div>
+    <div class="badge" style="margin-top:auto;">
+        System Uplink: SECURE
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="header">
+        <h1>Global Crowd-Pulse Surveillance</h1>
+        <a href="/logout" class="logout">Secure Logout</a>
+    </div>
+
+    <!-- JS dynamically injects camera cards here -->
+    <div class="nodes-grid" id="nodesGrid">
+        <div style="color: #8b949e;">Awaiting uplink telemetry...</div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

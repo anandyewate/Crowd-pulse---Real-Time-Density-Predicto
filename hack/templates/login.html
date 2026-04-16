@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login - National Security Command</title>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #090a0f;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .login-box {
+    background: rgba(20, 25, 35, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid #1f2937;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 204, 255, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+  }
+  h1 { color: #00ffcc; margin-bottom: 24px; font-weight: 300; letter-spacing: 1px; }
+  .flash-message {
+    background: rgba(255, 0, 0, 0.1);    
+    color: #ff4d4d;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+  input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: white;
+    box-sizing: border-box;
+  }
+  input:focus {
+    outline: none;
+    border-color: #00ffcc;
+  }
+  button {
+    width: 100%;
+    padding: 14px;
+    background: #00ffcc;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+  }
+  button:hover {
+    background: #00ccaa;
+    transform: translateY(-2px);
+  }
+  a {
+    color: #8b949e;
+    text-decoration: none;
+    display: block;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  a:hover { color: #00ffcc; }
+</style>
+</head>
+<body>
+
+<div class="login-box">
+  <h4 style="color:#8b949e; margin:0; text-transform:uppercase; font-size:12px;">Secure Access Terminal</h4>
+  <h1>National Security Command</h1>
+  
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="flash-message">{{ msg }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" action="/login">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">LOGIN</button>
+  </form>
+
+  <a href="/signup">Need an account? Sign up</a>
+</div>
+
+</body>
+</html>

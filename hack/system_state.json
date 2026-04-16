@@ -1,0 +1,1 @@
+{"CAM-01": {"timestamp": "00:18:35", "people_count": 3, "fps": 8, "risk_score": 0.0, "alert_level": "SAFE", "message": "System Nominal", "location": "Main Front Gate", "camera": "CAM-01", "panic": false, "prediction": "STABLE", "timeline": ["00:17:55 -> PANIC DETECTED - SWARM BEHAVIOR"]}}
