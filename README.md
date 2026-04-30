@@ -1,20 +1,21 @@
 # 🚨 CrowdPulse: AI Crowd Monitoring & Risk Detection System
 
-CrowdPulse is an AI-based system designed to monitor crowd density in real-time and detect potential risks such as overcrowding or stampede situations using computer vision.
+CrowdPulse is an AI-driven surveillance system designed to monitor crowd density in real time and detect potential risks such as overcrowding or stampede situations using computer vision techniques.
 
-Built for hackathons and real-world safety applications, this system processes video input and provides risk analysis with actionable insights.
+Built for hackathons and scalable real-world deployment, the system processes live or recorded video streams and provides actionable risk insights to improve public safety.
 
 ---
 
 ## 🔥 Features
 
 - 🎥 Real-time video processing (CCTV / webcam / video input)
-- 🧍 People detection using YOLO / OpenCV
+- 🧍 Person detection using YOLO (OpenCV integration)
 - 📊 Crowd density estimation
 - ⚠️ Risk level classification (LOW / MODERATE / HIGH)
-- 🧩 Grid-based crowd analysis (optional advanced feature)
-- 📈 Visual overlays and analytics
-- 🔔 Alert system (SMS / notifications ready)
+- 🧩 Grid-based crowd analysis *(advanced feature)*
+- 📈 Visual overlays (bounding boxes, density indicators)
+- 🔔 Alert system (SMS / notifications ready for integration)
+- 🌐 Optional web dashboard (Flask-based)
 
 ---
 
@@ -24,69 +25,79 @@ Built for hackathons and real-world safety applications, this system processes v
 - **OpenCV**
 - **YOLO (Object Detection)**
 - **NumPy**
-- **MediaPipe (optional)**
-- **Flask (if using web interface)**
+- **MediaPipe** *(optional enhancements)*
+- **Flask** *(for web interface)*
 
 ---
 
 ## 📂 Project Structure
 CrowdPulse/
 │
-├── main.py # Entry point
-├── detect.py # Person detection logic
-├── risk.py # Risk calculation logic
+├── main.py # Application entry point
+├── detect.py # Person detection logic (YOLO)
+├── risk.py # Risk calculation & classification
 ├── utils.py # Helper functions
-├── config.py # Configurations (thresholds, etc.)
+├── config.py # Thresholds and configuration
 │
-├── models/ # YOLO weights / models
-├── static/ # CSS / JS (if web app)
-├── templates/ # HTML (if Flask app)
+├── models/ # YOLO weights / model files
+├── static/ # CSS / JS (for web UI)
+├── templates/ # HTML templates (Flask)
 │
-├── requirements.txt
-└── README.md
+├── requirements.txt # Dependencies
+└── README.md # Documentation
 
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Installation & Setup
 
-### 1. Clone the repository
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/anandyewate/crowdpulse.git
 cd crowdpulse
 
-### Creating environments
+### 2.Create Venv
 python -m venv venv
-venv\Scripts\activate   # Windows
 
-###Installing Dependencies
-pip install -r requirements.txt
-
-#How to Run
-python main.py
 
 🧠 How It Works
-Video frames are captured in real-time
-YOLO detects people in each frame
-Crowd density is calculated based on:
-Number of people
-Area coverage
-Risk is evaluated using thresholds:
-LOW → Normal movement
-MODERATE → Increasing density
-HIGH → Possible danger (stampede risk)
-Output is displayed with bounding boxes + alerts
-
-📊 Risk Logic Example
-if density < 0.3:
-    risk = "LOW"
-elif density < 0.6:
-    risk = "MODERATE"
-else:
-    risk = "HIGH"
+🎥 Captures video frames in real time
+🧍 Detects people using YOLO model
+📊 Calculates crowd density based on:
+Number of detected individuals
+Spatial distribution / frame area
+⚠️ Evaluates risk levels using predefined thresholds
+📈 Displays output with bounding boxes, density metrics, and alerts
 
 🎯 Use Cases
-Public events (concerts, festivals)
-Railway stations / airports
-Smart city surveillance
-Disaster management systems
+🎤 Public events (concerts, festivals)
+🚉 Railway stations & airports
+🏙️ Smart city surveillance systems
+🚨 Disaster prevention & emergency response
+🏫 Campus safety monitoring
+🚀 Future Improvements
+Multi-camera integration
+Cloud deployment (AWS / GCP)
+Real-time dashboard analytics
+AI-based anomaly detection (beyond density)
+Mobile app integration for alerts
+
+
+This project was developed collaboratively by:
+
+- **Anand Vilas Yewate**
+- **Pratham Bodke**
+- **Rohan Suryawanshi**
+- **Rushikesh Babar**
+
+---
+
+## 🤝 Contributions
+
+Each team member contributed to different aspects of the project including:
+
+- Computer Vision & Detection Models  
+- Risk Analysis & Logic Design  
+- Backend Development (Flask)  
+- Frontend & Visualization  
+- System Integration & Testing  
