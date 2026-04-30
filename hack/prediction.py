@@ -1,3 +1,5 @@
+import numpy as np
+
 history = {}
 
 def predict(cam_id, risk):
@@ -7,22 +9,31 @@ def predict(cam_id, risk):
     hist = history[cam_id]
     hist.append(risk)
 
-    if len(hist) > 15:
+    if len(hist) > 30: # Use longer history for better regression
         hist.pop(0)
 
-    if len(hist) >= 15:
-        velocity = hist[-1] - hist[0]
+    # Need at least 10 points for a stable trend
+    if len(hist) >= 10:
+        x = np.arange(len(hist))
+        y = np.array(hist)
         
-        if velocity >= 3.5:
-            return "RAPID SURGE PREDICTED"
-        elif velocity >= 1.5:
-            return "INCREASING TREND"
-        elif velocity <= -2.0:
-            return "DISPERSING"
+        # Calculate Linear Regression Slope
+        slope, intercept = np.polyfit(x, y, 1)
+        
+        # Trend classification
+        if slope >= 0.4:
+            return f"ACCELERATING SURGE (Slope: {slope:.2f})"
+        elif slope >= 0.15:
+            return "STEADY INCREASE"
+        elif slope <= -0.2:
+            return "DE-ESCALATING"
+        elif abs(slope) < 0.05:
+            return "STABLE"
 
+    # Default logic for short history
     if risk >= 8:
         return "CRITICAL CAPACITY"
     elif risk >= 5:
-        return "MODERATE CROWD"
+        return "HIGH DENSITY"
 
-    return "STABLE"
+    return "MONITORING"

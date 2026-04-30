@@ -1,6 +1,6 @@
-from flask import Flask, jsonify, request, session, redirect, url_for, render_template, flash
+from flask import Flask, jsonify, request, session, redirect, url_for, render_template, flash, Response
 from flask_cors import CORS
-from alert import get_alert, get_timeline
+from alert import get_alert, get_timeline, video_frames, frame_lock
 from models import init_db, create_user, verify_user
 from sms_service import send_sms
 from config import SECRET_KEY, CAMERAS
@@ -72,6 +72,21 @@ def timeline():
     if "user_id" not in session:
         return jsonify({"error": "Unauthorized"}), 401
     return jsonify(get_timeline())
+
+def gen_frames(cam_id):
+    while True:
+        with frame_lock:
+            if cam_id in video_frames:
+                frame = video_frames[cam_id]
+                yield (b'--frame\r\n'
+                       b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        import time
+        time.sleep(0.05) # ~20 FPS cap
+
+@app.route("/video_feed/<cam_id>")
+def video_feed(cam_id):
+    return Response(gen_frames(cam_id),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == "__main__":
     app.run(debug=True)
